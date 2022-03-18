@@ -8,11 +8,13 @@ Socket socket;
 ObjectInputStream reader;
 ObjectOutputStream writer;
 ApplProtocol protocol;
-public TcpClientServer(Socket socket, ApplProtocol protocol) throws Exception{
+private int clientId;
+public TcpClientServer(Socket socket, ApplProtocol protocol, int clientId) throws Exception{
 	this.socket = socket;
 	reader = new ObjectInputStream(socket.getInputStream());
 	writer = new ObjectOutputStream(socket.getOutputStream());
 	this.protocol = protocol;
+	this.clientId = clientId;
 }
 	@Override
 	public void run() {
@@ -21,6 +23,10 @@ public TcpClientServer(Socket socket, ApplProtocol protocol) throws Exception{
 				Request request = (Request) reader.readObject();
 				Response response = protocol.getResponse(request);
 				writer.writeObject(response);
+				System.out.println(
+					Thread.currentThread().getName() 
+					+ " clientId="+clientId
+					+ " isDaemon=" + Thread.currentThread().isDaemon());  // V.R.
 			}
 		} catch(EOFException e) {
 			try {
