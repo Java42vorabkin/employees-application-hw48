@@ -38,8 +38,8 @@ public TcpServer(int port, ApplProtocol protocol) throws Exception{
 				e.printStackTrace();
 				break;
 			}
-			executor.shutdown();
 		}
+		executor.shutdown();
 	}
 	private class DeamonThreadFactory implements ThreadFactory {
 		@Override
