@@ -34,13 +34,12 @@ public TcpServer(int port, ApplProtocol protocol) throws Exception{
 				System.out.println(threadClient.getName());
 				threadClient.start();
 				*/
-			} catch (Exception e) {
-				
+			} catch (Exception e) {				
 				e.printStackTrace();
 				break;
 			}
+			executor.shutdown();
 		}
-
 	}
 	private class DeamonThreadFactory implements ThreadFactory {
 		@Override
